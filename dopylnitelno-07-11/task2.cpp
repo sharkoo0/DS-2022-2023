@@ -14,6 +14,16 @@ void printList(Node* first) {
     std::cout << "nullptr\n";
 }
 
+Node* copyList(Node* first) {
+    Node* holder = nullptr;
+    while (first != nullptr) {
+        holder = new Node{first->data, nullptr};
+        first = first->next;
+        holder = holder->next;
+    }
+    return holder;
+}
+
 bool isPalindromeWithStack(Node* first) {
     if (first == nullptr || first->next == nullptr) {
         return true;
@@ -78,19 +88,19 @@ void reverseList(Node*& first) {
 }
 
 bool isPalindromeWithoutStack(Node* first) {
-    Node* reversedList = first;
+    Node* reversedList = copyList(first);
     reverseList(reversedList);
     return equalLists(first, reversedList);
 }
 
 int main() {
     Node* palindrome = new Node{2, 
-                        new Node{3, 
+                        new Node{0, 
                         new Node{3, 
                         new Node{2, nullptr}}}};
 
     std::cout << isPalindromeWithStack(palindrome) << std::endl;
     std::cout << isPalindromeWithoutStack(palindrome) << std::endl;
-
+    
     return 0;
 }
